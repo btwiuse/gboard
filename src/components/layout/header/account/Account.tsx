@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { useAccount, useAccounts } from "@gear-js/react-hooks";
-import userSVG from "assets/images/icons/login.svg";
+import { useAccount } from "@gear-js/react-hooks";
+import { ReactComponent as userSVG } from "assets/images/icons/login.svg";
 import { Button } from "@gear-js/ui";
 import { AccountsModal } from "./accounts-modal";
 import { Wallet } from "./wallet";
+import { useAccounts } from "../../../../shim";
 
 function Account() {
   const { account } = useAccount();

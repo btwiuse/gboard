@@ -1,8 +1,5 @@
-import {
-  useApi,
-  useBalanceSubscription,
-  useLoggedInAccount,
-} from "@gear-js/react-hooks";
+import { useApi } from "@gear-js/react-hooks";
+import { useBalanceSubscription, useLoggedInAccount } from "shim";
 import { Routing } from "pages";
 import { ApiLoader, Footer, Header } from "components";
 import { withProviders } from "hocs";
