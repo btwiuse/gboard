@@ -12,6 +12,7 @@ function Home() {
   let [state, setState] = useState("unknown");
 
   useEffect(() => {
+    if (!isApiReady) return;
     async function init() {
       let query = { "Status": null };
       console.log({ programId: deploy.programId, metaWasm, query });
@@ -26,7 +27,6 @@ function Home() {
       setState(initState);
     }
     async function sub() {
-      await api.isReady;
       let unsub = api.gearEvents.subscribeToGearEvent(
         "MessagesDispatched",
         async ({ index, data }) => {
@@ -53,7 +53,7 @@ function Home() {
       );
     }
     init().then(sub);
-  }, []);
+  }, [isApiReady]);
 
   return <div>Current State: {state}</div>;
 }
