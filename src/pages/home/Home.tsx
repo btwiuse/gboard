@@ -2,6 +2,7 @@ import { useAccount, useApi } from "@gear-js/react-hooks";
 import { useEffect, useState } from "react";
 import deploy from "gboard/dist/deploy.json";
 import { metaWasm } from "gboard/dist/index";
+import "./Home.css";
 
 function stateString(state: boolean): string {
   return state ? "on" : "off";
@@ -55,7 +56,7 @@ function Home() {
     init().then(sub);
   }, [isApiReady]);
 
-  return <div>Current State: {state}</div>;
+  return <div className="home">Current State: {state}</div>;
 }
 
 export { Home };
