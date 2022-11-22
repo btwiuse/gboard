@@ -1,5 +1,7 @@
+import deploy from "gboard/dist/deploy.json";
+
 const ADDRESS = {
-  NODE: process.env.REACT_APP_NODE_ADDRESS as string,
+  NODE: deploy.RPC_NODE ?? process.env.REACT_APP_NODE_ADDRESS as string,
 };
 
 const LOCAL_STORAGE = {
