@@ -1,5 +1,4 @@
-import { useApi } from "@gear-js/react-hooks";
-import { useBalanceSubscription, useLoggedInAccount } from "shim";
+import { useAccount, useApi } from "@gear-js/react-hooks";
 import { Routing } from "pages";
 import { ApiLoader, Footer, Header } from "components";
 import { withProviders } from "hocs";
@@ -7,14 +6,14 @@ import "App.scss";
 
 function Component() {
   const { isApiReady } = useApi();
-  const { isLoginReady } = useLoggedInAccount();
+  const { isAccountReady } = useAccount();
 
-  useBalanceSubscription();
+  const isAppReady = isApiReady && isAccountReady;
 
   return (
     <>
-      <Header isAccountVisible={isLoginReady} />
-      <main>{isApiReady && isLoginReady ? <Routing /> : <ApiLoader />}</main>
+      <Header isAccountVisible={isAccountReady} />
+      <main>{isAppReady ? <Routing /> : <ApiLoader />}</main>
       <Footer />
     </>
   );
