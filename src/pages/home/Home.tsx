@@ -28,7 +28,9 @@ function Home() {
             );
 
             console.log("program state changed:", result.toHuman());
-            setState((result.toJSON() as any).StatusOf);
+            let currentState = (result.toHuman() as any).StatusOf;
+            console.log("setting state to:", currentState);
+            setState(currentState);
           }
         },
       );
