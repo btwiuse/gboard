@@ -3,11 +3,28 @@ import { useEffect, useState } from "react";
 import deploy from "gboard/dist/deploy.json";
 import { metaWasm } from "gboard/dist/index";
 
+function stateString(state: boolean): string {
+  return state ? "on" : "off";
+}
+
 function Home() {
   let { api, isApiReady } = useApi();
-  let [state, setState] = useState(false);
+  let [state, setState] = useState("unknown");
 
   useEffect(() => {
+    async function init() {
+      let query = { "Status": null };
+      console.log({ programId: deploy.programId, metaWasm, query });
+      const result = await api.programState.read(
+        deploy.programId as `0x${string}`,
+        Buffer.from(metaWasm),
+        query,
+      );
+      console.log("init:", result.toHuman());
+      let initState = stateString((result.toHuman() as any).StatusOf);
+      console.log("setting state to:", initState);
+      setState(initState);
+    }
     async function sub() {
       await api.isReady;
       let unsub = api.gearEvents.subscribeToGearEvent(
@@ -28,17 +45,17 @@ function Home() {
             );
 
             console.log("program state changed:", result.toHuman());
-            let currentState = (result.toHuman() as any).StatusOf;
+            let currentState = stateString((result.toHuman() as any).StatusOf);
             console.log("setting state to:", currentState);
             setState(currentState);
           }
         },
       );
     }
-    sub();
+    init().then(sub);
   }, []);
 
-  return <div>Current State: {state ? "on" : "off"}</div>;
+  return <div>Current State: {state}</div>;
 }
 
 export { Home };
