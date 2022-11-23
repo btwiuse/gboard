@@ -11,10 +11,6 @@ import {
   getWasmMetadata,
 } from "@gear-js/api";
 
-function stateString(state: boolean): string {
-  return state ? "set (black)" : "clear (white)";
-}
-
 function Home() {
   let { api, isApiReady } = useApi();
   let [initialized, setInitialized] = useState(false);
@@ -23,6 +19,7 @@ function Home() {
 
   useEffect(() => {
     if (!isApiReady) return;
+
     async function init() {
       let query = { "DumpAll": null };
       console.log({ programId: deploy.programId, metaWasm, query });
@@ -43,6 +40,7 @@ function Home() {
       });
       setInitialized(true);
     }
+
     async function sub() {
       let unsub = api.gearEvents.subscribeToGearEvent(
         "MessagesDispatched",
@@ -67,20 +65,18 @@ function Home() {
             setState((old) => {
               for (let i = 1; i <= 400; i++) {
                 let td = document.getElementById(`td${i}`)!;
-                // if (td.className != "cell-unknown") {
                 td.className = currentState[i] ? "cell-set" : "cell-clear";
-                // }
               }
               return currentState;
             });
             setDisabled((old) => {
-              // old[0] = false;
               return old.map(() => false);
             });
           }
         },
       );
     }
+
     init().then(sub).then(() =>
       setDisabled((old) => {
         // old[0] = false;
@@ -130,7 +126,7 @@ function Home() {
 
     let tx = api.message.send(msg, meta);
 
-    await (new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       tx.signAndSend(alice, ({ events, status }) => {
         console.log(`STATUS: ${status.toString()}`);
         if (status.isInBlock) {
@@ -148,40 +144,12 @@ function Home() {
           }
         });
       });
-    }));
-    /*
-    try {
-    } catch (e) {
-      if (td) {
-        td.className = originalClassName!;
-      }
-    } finally {
-      let query = { "Pixel": n };
-      console.log({ programId: deploy.programId, metaWasm, query });
-      const result = await api.programState.read(
-        deploy.programId as `0x${string}`,
-        Buffer.from(metaWasm),
-        query,
-      );
-      console.log(`Pixel(${n}):`, result.toHuman());
-      let pxState = (result.toHuman() as any).StatusOf;
-      console.log("setting state to:", pxState);
-      // setState((old) => { old[n] = pxState; return old; });
-      let td = document.getElementById(`td${n}`)!;
-      td.className = pxState ? "cell-set" : "cell-clear";
-    }
-    */
+    });
   };
 
-  let colorNegate = async (n: number, td: HTMLElement) => {
-    // td.className = "cell-unknown";
-    await toggle(n, td);
-  };
-
-  let fill = (rows: number, cols: number) => {
+  let grid = (rows: number, cols: number) => {
     let onClick = (n: number) => (e: any) => {
-      console.log(n);
-      colorNegate(n, e.target);
+      toggle(n, e.target);
     };
     return (
       <tbody>
@@ -218,7 +186,7 @@ function Home() {
         {state[0] ? "(set)" : "(clear)"}
       </button>
       <table id="grid">
-        {fill(16, 25)}
+        {grid(16, 25)}
       </table>
       <p className="links">
         <a href="https://www.gear-tech.io" target="_blank">GEAR</a>
