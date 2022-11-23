@@ -108,11 +108,50 @@ function Home() {
     });
   };
 
+  let colorNegate = (td: HTMLElement) => {
+    if (td.className === "cell") {
+      td.className = "cell-set";
+      return;
+    }
+    if (td.className === "cell-set") {
+      td.className = "cell";
+      return;
+    }
+  };
+
+  let fill = (rows: number, cols: number) => {
+    let onClick = (n: number) => (e: any) => {
+      console.log(n);
+      colorNegate(e.target);
+    };
+    return (
+      <tbody>
+        {Array(rows).fill(0).map((r, i) => (
+          <tr key={`tr${i}`}>
+            {Array(cols).fill(0).map((c, j) => (
+              <td
+                className={"cell"}
+                id={`td${i * cols + j + 1}`}
+                key={`td${i * cols + j + 1}`}
+                onClick={onClick(i * cols + j + 1)}
+              >
+                {i * cols + j + 1}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    );
+  };
+
   return (
     <div className="home">
       <button onClick={toggle} disabled={disabled}>
         Current State: {state}
       </button>
+      <table id="grid">
+        {fill(16, 25)}
+      </table>
     </div>
   );
 }

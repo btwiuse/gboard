@@ -6,3 +6,19 @@
   width: 600px;
   margin-left: -250px;
 }
+
+.cell {
+  background-color: white;
+  color: black;
+  text-align: center;
+  user-select: none;
+  font-size: xx-small;
+}
+
+.cell-set {
+  background-color: black;
+  color: white;
+  text-align: center;
+  user-select: none;
+  font-size: xx-small;
+}
