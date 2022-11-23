@@ -43,3 +43,14 @@
   background-color: gray;
   color: black;
 }
+
+a, a:visited {
+  font-family: "Helvetica Neue", "Helvetica", Arial, "Hiragino Sans GB",
+    "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  color: white;
+}
+
+.links {
+  padding-top: 10px;
+}

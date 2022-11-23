@@ -220,6 +220,17 @@ function Home() {
       <table id="grid">
         {fill(16, 25)}
       </table>
+      <p className="links">
+        <a href="https://www.gear-tech.io" target="_blank">GEAR</a>
+        <a href="https://github.com/btwiuse/gboard" target="_blank">UI</a>
+        <a
+          href="https://github.com/btwiuse/gboard/tree/main/contract"
+          target="_blank"
+        >
+          CONTRACT
+        </a>
+        <a href="http://matrix67.com" target="_blank">MATRIX67</a>
+      </p>
     </div>
   );
 }
