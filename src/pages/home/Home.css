@@ -7,7 +7,15 @@
   margin-left: -250px;
 }
 
-.cell {
+.cell-unknown {
+  background-color: gray;
+  color: black;
+  text-align: center;
+  user-select: none;
+  font-size: xx-small;
+}
+
+.cell-clear {
   background-color: white;
   color: black;
   text-align: center;
@@ -21,4 +29,19 @@
   text-align: center;
   user-select: none;
   font-size: xx-small;
+}
+
+.button-set {
+  background-color: black;
+  color: white;
+}
+
+.button-clear {
+  background-color: white;
+  color: black;
+}
+
+.button-disabled {
+  background-color: gray;
+  color: black;
 }

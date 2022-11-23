@@ -163,11 +163,7 @@ ABQAEwCAQEBA////AiaEj6HL6MBieEkueuzFUE/ufVjIdVpJgh66qqdrse/Y0jOV2jEsFQA7";
     <div id="root"></div>
     <script type="text/javascript">
       var loadingGrid = 0;
-      var timer1 = window.setInterval("loading()", 10);
-      var evtSource = new EventSource("get_state.php");
-      evtSource.onmessage = function (e) {
-        freshGrid(e.data.split("\n").join(""));
-      };
+      // var timer1 = window.setInterval("loading()", 10);
     </script>
   </body>
 </html>
