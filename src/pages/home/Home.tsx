@@ -79,7 +79,6 @@ function Home() {
 
     init().then(sub).then(() =>
       setDisabled((old) => {
-        // old[0] = false;
         return old.map(() => false);
       })
     );
@@ -92,17 +91,15 @@ function Home() {
       return old;
     });
 
-    const originalClassName = td?.className;
     const meta = await getWasmMetadata(Buffer.from(metaWasm));
     const payload = { TogglePixel: n };
     const alice = await GearKeyring.fromSuri("//Alice");
     const aliceHex = decodeAddress(alice.address);
 
+    const originalClassName = td?.className;
     if (td) {
       td.className = "cell-unknown";
     }
-
-    let gasLimit;
 
     const gas = await api.program.calculateGas.handle(
       aliceHex,
@@ -112,8 +109,8 @@ function Home() {
       true,
       meta,
     );
-    gasLimit = gas.min_limit;
-    console.log(`GasLimit: ${gas}\n`);
+    let gasLimit = gas.min_limit;
+    console.log(`gasLimit: ${gasLimit}`);
 
     const msg = {
       destination: deploy.programId as `0x${string}`,
@@ -121,8 +118,6 @@ function Home() {
       gasLimit,
       value: 0,
     };
-
-    console.log(msg);
 
     let tx = api.message.send(msg, meta);
 
@@ -177,11 +172,9 @@ function Home() {
       <button
         onClick={() => toggle(0)}
         disabled={disabled[0]}
-        className={initialized
-          ? disabled[0]
-            ? "button-disabled"
-            : (state[0] ? "button-set" : "button-clear")
-          : ""}
+        className={(initialized && !disabled[0])
+          ? state[0] ? "button-set" : "button-clear"
+          : "button-disabled"}
       >
         {state[0] ? "(set)" : "(clear)"}
       </button>
